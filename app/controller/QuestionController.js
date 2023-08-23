@@ -40,6 +40,7 @@ module.exports = {
 
   //findAll
   async index(req, res, next) {
+    
     let type_data = req.query.type;
     if (type_data == null) {
       type_data = "collection";
@@ -62,7 +63,8 @@ module.exports = {
       });
       let result = await question
         .findAll({
-            where: query,
+
+          where: query,
           include: [
             {
                 model: title,
@@ -76,7 +78,12 @@ module.exports = {
                 attributes: {
                     exclude: ["createdAt", "updatedAt","id","questionId","userId"],
                 },
-            },
+                where: {
+                    userId: req.user.id,
+                },
+                required: false,
+              },
+              
         ],
           offset: (page - 1) * limit,
           limit: limit,
