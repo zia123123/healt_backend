@@ -49,6 +49,25 @@ module.exports = {
     }
   },
 
+   //find
+   async check(req, res, next) {
+   // count all
+    let count = await answer.count({
+        where: {
+            userId: req.user.id,
+        },
+    });
+    if (!count) {
+      return apiResponse.notFoundResponse(res, "Not Fond");
+    } else {
+      if(count >= 40){
+        return apiResponse.successResponse(res, "beres semua");
+      }else{
+        return apiResponse.notFoundResponse(res, "belum beres semua");
+      }
+    }
+  },
+
   //findAll
   async index(req, res, next) {
     let type_data = req.query.type;

@@ -33,5 +33,7 @@ router.post(
 
      //top product
      router.post("/api/answer",authtoken, AnswerController.create);
+     router.get("/api/answer/check",authtoken, AnswerController.check);
+
 
 module.exports = router;
