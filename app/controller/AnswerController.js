@@ -60,7 +60,7 @@ module.exports = {
     if (!count) {
       return apiResponse.notFoundResponse(res, "Not Fond");
     } else {
-      if(count >= 40){
+      if(count >= 10){
         return apiResponse.successResponse(res, "beres semua");
       }else{
         return apiResponse.notFoundResponse(res, "belum beres semua");
