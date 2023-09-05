@@ -19,7 +19,7 @@ router.post(
 
     //top product
     router.post("/api/title", TitleController.create);
-    router.get('/api/title/', TitleController.index);
+    router.get('/api/title/',authtoken, TitleController.index);
     router.get('/api/title/:id', TitleController.find, TitleController.show);
     router.patch("/api/title/:id",TitleController.update);
     router.delete('/api/title/:id', TitleController.find,TitleController.delete);

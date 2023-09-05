@@ -1,4 +1,4 @@
-const { title } = require("../models/index");
+const { title,answer,question } = require("../models/index");
 const { Op } = require("sequelize");
 const apiResponse = require("../helpers/apiResponse");
 
@@ -89,7 +89,29 @@ module.exports = {
         .findAll({
           order: [["id", "ASC"]],
         })
-        .then((result) => {
+        .then(async (result) => {
+          const promises = result.map(async (item) => {
+            const check_count_asnwer = await answer.count({
+              where: {
+                userId: req.user.id,
+              },
+              include: [
+                {
+                  model: question,
+                  where: {
+                    titleId: item.id,
+                  },
+                },
+              ],
+            });
+          
+            // Update the count_answer property for the current item
+            item.dataValues.count_answer = check_count_asnwer || 0;
+          });
+          await Promise.all(promises);
+          console.log(result);
+
+        
           var totalData = parseInt(countData);
           var totalPage = Math.ceil(totalData);
           returnData = {
